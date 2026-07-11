@@ -21,6 +21,13 @@ def main() -> None:
         ],
     )
 
+    if not response.usage:
+        raise RuntimeError("No valid response usage data")
+
+    prompt_tokens = response.usage.prompt_tokens
+    response_tokens = response.usage.completion_tokens
+
+    print(f"Prompt tokens: {prompt_tokens}\nResponse tokens: {response_tokens}")
     print("Response:")
     print(response.choices[0].message.content)
 

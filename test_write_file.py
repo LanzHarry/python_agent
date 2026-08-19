@@ -10,7 +10,7 @@ class TestCase(NamedTuple):
 
 test_cases: list[TestCase] = [
     TestCase("calculator", "lorem.txt", "wait, this isn't lorem ipsum"),
-    TestCase("calculator", "pkg/morelorem.txt", "lorem impsum dolor sit amet"),
+    TestCase("calculator", "pkg/morelorem.txt", "lorem ipsum dolor sit amet"),
     TestCase("calculator", "/tmp/temp.txt", "this should not be allowed"),
 ]
 

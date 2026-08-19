@@ -22,7 +22,7 @@ def write_file(working_directory: str, file_path: str, content: str) -> str:
         with open(file_path, "w") as file_to_write:
             _ = file_to_write.write(content)
 
-        return f'Successfully wrote to file "{file_path}" ({len(content)} characters writter)'
+        return f'Successfully wrote to file "{file_path}" ({len(content)} characters written)'
 
     except (OSError, ValueError) as e:
         return f"Error: {e}"

@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 from openai.types.chat import ChatCompletionMessageParam
+from prompts import system_prompt
 
 
 def main() -> None:
@@ -20,7 +21,8 @@ def main() -> None:
     client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
 
     messages: list[ChatCompletionMessageParam] = [
-        {"role": "user", "content": args.user_prompt}
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": args.user_prompt},
     ]
 
     response = client.chat.completions.create(

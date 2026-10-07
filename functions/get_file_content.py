@@ -1,5 +1,24 @@
 import os
 from config import MAX_CHARS_TO_READ
+from openai.types.chat import ChatCompletionToolParam
+
+schema_get_file_content: ChatCompletionToolParam = {
+    "type": "function",
+    "function": {
+        "name": "get_file_content",
+        "description": "Returns the contents of a file (as a string) up to a pre-defined maximum character limit",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "File path of the file to get content from. The file path is relative to the working directory.",
+                },
+            },
+            "required": ["file_path"],
+        },
+    },
+}
 
 
 def get_file_content(working_directory: str, file_path: str) -> str:

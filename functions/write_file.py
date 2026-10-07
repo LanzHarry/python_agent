@@ -1,4 +1,27 @@
 import os
+from openai.types.chat import ChatCompletionToolParam
+
+schema_write_file: ChatCompletionToolParam = {
+    "type": "function",
+    "function": {
+        "name": "write_file",
+        "description": "Writes string of content to a specified file_path (relative to the working directory). If the file or its parent directories don't exist they will be created.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "File path of the file to write to. The file path is relative to the working directory.",
+                },
+                "content": {
+                    "type": "string",
+                    "description": "The string of content to be written to the specified file.",
+                },
+            },
+            "required": ["file_path", "content"],
+        },
+    },
+}
 
 
 def write_file(working_directory: str, file_path: str, content: str) -> str:

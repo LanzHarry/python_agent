@@ -52,6 +52,13 @@ def main() -> None:
         for tool_call in message.tool_calls:
             function_args = json.loads(tool_call.function.arguments or "{}")
             print(f"Calling function: {tool_call.function.name}({function_args})")
+            result_message = call_function(tool_call, args.verbose)
+
+            if not result_message["content"]:
+                raise RuntimeError("No content in tool result message")
+
+            if args.verbose:
+                print(f"-> {result_message['content']}")
 
 
 if __name__ == "__main__":

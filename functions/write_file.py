@@ -25,9 +25,9 @@ schema_write_file: ChatCompletionToolParam = {
 }
 
 
-def write_file(working_directory: str, file_path: str, content: str) -> str:
+def write_file(working_dir: str, file_path: str, content: str) -> str:
     try:
-        working_dir_abs_path = os.path.abspath(working_directory)
+        working_dir_abs_path = os.path.abspath(working_dir)
         file_path = os.path.normpath(os.path.join(working_dir_abs_path, file_path))
         valid_file_path = (
             os.path.commonpath([working_dir_abs_path, file_path])

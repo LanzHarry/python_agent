@@ -10,7 +10,7 @@ schema_get_files_info: ChatCompletionToolParam = {
         "parameters": {
             "type": "object",
             "properties": {
-                "directory": {
+                "target_dir_rel": {
                     "type": "string",
                     "description": "Directory path to list files from, relative to the working directory (default is the working directory itself)",
                 },

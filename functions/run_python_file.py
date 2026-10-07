@@ -28,10 +28,10 @@ schema_run_python_file: ChatCompletionToolParam = {
 
 
 def run_python_file(
-    working_directory: str, file_path: str, args: list[str] | None = None
+    working_dir: str, file_path: str, args: list[str] | None = None
 ) -> str:
     try:
-        working_dir_abs_path = os.path.abspath(working_directory)
+        working_dir_abs_path = os.path.abspath(working_dir)
         file_path_abs = os.path.normpath(os.path.join(working_dir_abs_path, file_path))
         valid_file_path = (
             os.path.commonpath([working_dir_abs_path, file_path_abs])

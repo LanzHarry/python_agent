@@ -23,9 +23,9 @@ schema_get_file_content: ChatCompletionToolParam = {
 }
 
 
-def get_file_content(working_directory: str, file_path: str) -> str:
+def get_file_content(working_dir: str, file_path: str) -> str:
     try:
-        working_dir_abs_path = os.path.abspath(working_directory)
+        working_dir_abs_path = os.path.abspath(working_dir)
         file_path = os.path.normpath(os.path.join(working_dir_abs_path, file_path))
         valid_file_path = (
             os.path.commonpath([working_dir_abs_path, file_path])

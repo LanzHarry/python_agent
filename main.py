@@ -1,12 +1,13 @@
 import argparse
-import os
 import json
+import os
 
 from dotenv import load_dotenv
 from openai import OpenAI
 from openai.types.chat import ChatCompletionMessageParam
+
+from functions.call_function import available_functions, call_function
 from prompts import system_prompt
-from functions.call_function import available_functions
 
 
 def main() -> None:

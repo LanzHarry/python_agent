@@ -1,4 +1,5 @@
 import os
+
 from openai.types.chat import ChatCompletionToolParam
 
 schema_get_files_info: ChatCompletionToolParam = {

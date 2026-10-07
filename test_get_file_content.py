@@ -1,6 +1,7 @@
 from typing import NamedTuple
-from functions.get_file_content import get_file_content
+
 from config import MAX_CHARS_TO_READ
+from functions.get_file_content import get_file_content
 
 
 class TestCase(NamedTuple):

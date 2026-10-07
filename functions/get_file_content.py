@@ -1,6 +1,8 @@
 import os
-from config import MAX_CHARS_TO_READ
+
 from openai.types.chat import ChatCompletionToolParam
+
+from config import MAX_CHARS_TO_READ
 
 schema_get_file_content: ChatCompletionToolParam = {
     "type": "function",

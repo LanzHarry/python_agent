@@ -1,11 +1,12 @@
 import argparse
 import os
+import sys
 
 from dotenv import load_dotenv
 from openai import OpenAI
 from openai.types.chat import ChatCompletionMessageParam
 
-from functions.messages import handle_tool_call, message_model, convert_message_to_param
+from functions.messages import convert_message_to_param, handle_tool_call, message_model
 from prompts import system_prompt
 
 
@@ -28,16 +29,20 @@ def main() -> None:
     ]
 
     for _ in range(20):
-        pass
+        # call the model, handle responses etc.
+        response = message_model(client, messages, args.verbose)
+        messages.append(convert_message_to_param(response))
 
-    response = message_model(client, messages, args.verbose)
-    messages.append(convert_message_to_param(response))
+        if response.tool_calls is not None:
+            for tool_call in response.tool_calls:
+                if tool_call.type == "function":
+                    tool_call_result = handle_tool_call(tool_call, args.verbose)
+                    messages.append(tool_call_result)
+        else:
+            print(f"Final response:\n{response.content}")
+            return
 
-    if response.tool_calls is not None:
-        for tool_call in response.tool_calls:
-            handle_tool_call(tool_call, args.verbose)
-
-    print(messages)
+    sys.exit(1)
 
 
 if __name__ == "__main__":

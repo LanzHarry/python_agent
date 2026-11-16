@@ -1,6 +1,6 @@
-from openai import OpenAI
 import json
 
+from openai import OpenAI
 from openai.types.chat import (
     ChatCompletionAssistantMessageParam,
     ChatCompletionMessage,
@@ -9,7 +9,7 @@ from openai.types.chat import (
     ChatCompletionToolMessageParam,
 )
 
-from functions.call_function import call_function, available_functions
+from functions.call_function import available_functions, call_function
 
 
 def message_model(
@@ -32,9 +32,6 @@ def message_model(
         if "content" in last_message:
             print(f"User prompt: {last_message['content']}")
         print(f"Prompt tokens: {prompt_tokens}\nResponse tokens: {response_tokens}")
-
-    print("Response:")
-    print(response.choices[0].message.content)
 
     return response.choices[0].message
 

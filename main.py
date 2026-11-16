@@ -1,12 +1,11 @@
 import argparse
-import json
 import os
 
 from dotenv import load_dotenv
 from openai import OpenAI
 from openai.types.chat import ChatCompletionMessageParam
 
-from functions.call_function import available_functions, call_function
+from functions.messages import handle_tool_call, message_model, convert_message_to_param
 from prompts import system_prompt
 
 
@@ -28,37 +27,17 @@ def main() -> None:
         {"role": "user", "content": args.user_prompt},
     ]
 
-    response = client.chat.completions.create(
-        model="openrouter/free",
-        messages=messages,
-        tools=available_functions,
-    )
+    for _ in range(20):
+        pass
 
-    if not response.usage:
-        raise RuntimeError("Response may be malformed")
+    response = message_model(client, messages, args.verbose)
+    messages.append(convert_message_to_param(response))
 
-    if args.verbose:
-        prompt_tokens = response.usage.prompt_tokens
-        response_tokens = response.usage.completion_tokens
-        print(f"User prompt: {args.user_prompt}")
-        print(f"Prompt tokens: {prompt_tokens}\nResponse tokens: {response_tokens}")
+    if response.tool_calls is not None:
+        for tool_call in response.tool_calls:
+            handle_tool_call(tool_call, args.verbose)
 
-    print("Response:")
-    print(response.choices[0].message.content)
-
-    message = response.choices[0].message
-
-    if message.tool_calls is not None:
-        for tool_call in message.tool_calls:
-            function_args = json.loads(tool_call.function.arguments or "{}")
-            print(f"Calling function: {tool_call.function.name}({function_args})")
-            result_message = call_function(tool_call, args.verbose)
-
-            if not result_message["content"]:
-                raise RuntimeError("No content in tool result message")
-
-            if args.verbose:
-                print(f"-> {result_message['content']}")
+    print(messages)
 
 
 if __name__ == "__main__":
